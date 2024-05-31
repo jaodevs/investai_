@@ -48,7 +48,7 @@ export const Perfil: React.FC = () => {
     setisLoading(true);
 
     debounce(() =>
-      PerfilService.getAll(page, filter).then((result) => {
+      PerfilService.getAll().then((result) => {
         setisLoading(false);
 
         if (result instanceof Error) {

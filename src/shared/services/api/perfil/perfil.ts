@@ -29,8 +29,6 @@ type TPessoasComTotalCount = {
 const LOCAL_STORAGE_KEY__ACCESS_TOKEN = 'APP_ACCESS_TOKEN';
 
 const getAll = async (
-  page = 1,
-  filter = " "
 ): Promise<TPessoasComTotalCount | Error> => {
   try {
     const accessToken = localStorage.getItem(LOCAL_STORAGE_KEY__ACCESS_TOKEN);

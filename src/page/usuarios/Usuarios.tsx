@@ -48,7 +48,7 @@ export const Usuarios: React.FC = () => {
     setisLoading(true);
 
     debounce(() =>
-      UserService.getAll(page, filter).then((result) => {
+      UserService.getAll().then((result) => {
         setisLoading(false);
 
         if (result instanceof Error) {
