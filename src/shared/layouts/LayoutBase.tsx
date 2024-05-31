@@ -1,6 +1,5 @@
 import { ReactNode } from "react";
 import {
-  Button,
   Icon,
   IconButton,
   Theme,

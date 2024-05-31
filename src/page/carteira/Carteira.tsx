@@ -1,7 +1,7 @@
-import { useSearchParams, useNavigate } from "react-router-dom";
+import {useNavigate } from "react-router-dom";
 import { FerramentasDaListagem } from "../../shared/components";
 import { LayoutBaseDePagina } from "../../shared/layouts";
-import { JSXElementConstructor, Key, ReactElement, ReactFragment, ReactPortal, useEffect, useMemo, useState } from "react";
+import { JSXElementConstructor, Key, ReactElement, ReactFragment, ReactPortal, useEffect, useState } from "react";
 import { useDebounce } from "../../shared/hooks";
 import {
     CarteiraService,
@@ -23,7 +23,6 @@ import { Environment } from "../../shared/environment";
 
 export const Carteira: React.FC = () => {
   const navigate = useNavigate();
-  const [searchParams, setSearchParams] = useSearchParams();
   const { debounce } = useDebounce(3000, false);
   const [rows, setRows] = useState<IListagemCarteira>();
   const [totalCount, settotalCount] = useState(0);
@@ -51,8 +50,8 @@ export const Carteira: React.FC = () => {
       barraDeFerramentas={
         <FerramentasDaListagem
           mostrarInputBusca
-          textoBotaoNovo="Nova Consulta"
-          aoClicarEmNovo={() => navigate("/novaconsulta")}
+          textoBotaoNovo="Nova carteira"
+          aoClicarEmNovo={() => navigate("/novacarteira")}
         />
       }
     >

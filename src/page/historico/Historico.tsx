@@ -1,4 +1,4 @@
-import { useSearchParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { FerramentasDaListagem } from "../../shared/components";
 import { LayoutBaseDePagina } from "../../shared/layouts";
 import {
@@ -8,7 +8,6 @@ import {
   ReactFragment,
   ReactPortal,
   useEffect,
-  useMemo,
   useState,
 } from "react";
 import { useDebounce } from "../../shared/hooks";
@@ -32,7 +31,6 @@ import { Environment } from "../../shared/environment";
 
 export const Historico: React.FC = () => {
   const navigate = useNavigate();
-  const [searchParams, setSearchParams] = useSearchParams();
   const { debounce } = useDebounce(3000, false);
   const [rows, setRows] = useState<IListagemHistorico>();
   const [totalCount, settotalCount] = useState(0);

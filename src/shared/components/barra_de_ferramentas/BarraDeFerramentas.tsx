@@ -1,4 +1,4 @@
-import { Box, Button, Icon, Paper, TextField, useTheme } from "@mui/material";
+import { Box, Button, Icon, Paper,  useTheme } from "@mui/material";
 import { Clientes} from "../../../page";
 
 interface IFerramentasDaListagemProps {

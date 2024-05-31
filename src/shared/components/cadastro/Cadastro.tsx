@@ -21,7 +21,7 @@ interface ICadastroProps {
     children: React.ReactNode;
 }
 
-export const Cadastro: React.FC<ICadastroProps> = ({ children }) => {
+export const Cadastro: React.FC<ICadastroProps> = ({}) => {
     const navigate = useNavigate();
 
     const [isLoading, setIsLoading] = useState(false);

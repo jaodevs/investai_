@@ -1,4 +1,4 @@
-import { Environment } from "../../../environment";
+
 import { Api } from "../axios-config";
 
 
@@ -11,10 +11,7 @@ interface IDetaluser {
     password: string;
 }
 
-type TPessoasComTotalCount = {
-    data: IDetaluser[];
-    totalCount: number;
-};
+
 
 export const create = async (
     dados: Omit<IDetaluser, "id">

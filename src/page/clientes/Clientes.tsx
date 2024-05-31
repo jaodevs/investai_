@@ -1,4 +1,4 @@
-import { useSearchParams, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import { FerramentasDaListagem } from "../../shared/components";
 import { LayoutBaseDePagina } from "../../shared/layouts";
 import {
@@ -8,7 +8,6 @@ import {
   ReactFragment,
   ReactPortal,
   useEffect,
-  useMemo,
   useState,
 } from "react";
 import { useDebounce } from "../../shared/hooks";
