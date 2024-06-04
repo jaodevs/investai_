@@ -1,4 +1,4 @@
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { FerramentasDaListagem } from "../../shared/components";
 import { LayoutBaseDePagina } from "../../shared/layouts";
 import {
@@ -98,9 +98,24 @@ export const Clientes: React.FC = () => {
                     | ReactPortal
                     | null
                     | undefined;
+                  id_profile:
+                    | string
+                    | number
+                    | boolean
+                    | ReactElement<any, string | JSXElementConstructor<any>>;
                 }) => (
                   <TableRow>
-                    <TableCell>{row.name}</TableCell>
+                    <TableCell>
+                      {row.name} (
+                      {row.id_profile === 1
+                        ? "Conservador"
+                        : row.id_profile === 2
+                        ? "Moderado"
+                        : row.id_profile === 3
+                        ? "Agressivo"
+                        : "Indefinido"}
+                      )
+                    </TableCell>
                     <TableCell>{row.type}</TableCell>
                   </TableRow>
                 )

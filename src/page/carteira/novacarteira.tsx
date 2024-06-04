@@ -1,5 +1,5 @@
 import { useState, FormEvent, useEffect } from "react";
-import {  } from "../../shared/components";
+import {} from "../../shared/components";
 import { CarteiraService } from "../../shared/services/api/carteira/carteira";
 import {
   TextField,
@@ -19,9 +19,11 @@ import {
 import {
   listedsharesService,
   IListagemlistedshares,
+  IDetalhelistedshares,
 } from "../../shared/services/api/acoes_listadas/acoes_listadas";
+
 import { LayoutBaseDePagina } from "../../shared/layouts/LayoutBase";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 interface Novacarteira {
   id_client: string;
@@ -62,18 +64,34 @@ export const Novacarteira = () => {
   useEffect(() => {
     const fetchAcoes = async () => {
       try {
-        const response = await listedsharesService.getAll();
-        if (response instanceof Error) {
-          console.error(response.message);
+        if (formData.id_client) {
+          // Se houver cliente selecionado, busca apenas as ações disponíveis para esse cliente
+          const response = await listedsharesService.getAll();
+          if (response instanceof Error) {
+            console.error(response.message);
+          } else {
+            // Filtra as ações com base no id_profile do cliente selecionado
+            const acoesFiltradas = response.data.items.filter(
+              (acao: IDetalhelistedshares) =>
+                acao.id_profile === formData.id_client
+            );
+            setAcoes(acoesFiltradas);
+          }
         } else {
-          setAcoes(response.data.items);
+          // Se não houver cliente selecionado, busca todas as ações disponíveis
+          const response = await listedsharesService.getAll();
+          if (response instanceof Error) {
+            console.error(response.message);
+          } else {
+            setAcoes(response.data.items);
+          }
         }
       } catch (error) {
-        console.error("Erro ao buscar perfis:", error);
+        console.error("Erro ao buscar ações:", error);
       }
     };
     fetchAcoes();
-  }, []);
+  }, [formData.id_client]);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -108,7 +126,7 @@ export const Novacarteira = () => {
     try {
       await CarteiraService.create(formData);
       setSubmitStatus("success");
-      navigate('/carteira');
+      navigate("/carteira");
     } catch (error) {
       console.error(error);
       setSubmitStatus("error");
@@ -117,9 +135,13 @@ export const Novacarteira = () => {
 
   return (
     <LayoutBaseDePagina>
-      <form onSubmit={handleSubmit} className="appointment-form"  style={{ margin: "0 4rem" }}>
+      <form
+        onSubmit={handleSubmit}
+        className="appointment-form"
+        style={{ margin: "0 4rem" }}
+      >
         <Typography variant="h3" align="center">
-        Criar Carteira
+          Criar Carteira
         </Typography>
         <FormControl fullWidth margin="normal">
           <InputLabel id="cliente-select-label">Cliente</InputLabel>
@@ -130,11 +152,21 @@ export const Novacarteira = () => {
             required
           >
             {Array.isArray(cliente) ? (
-              cliente.map((a: { id: string; name: string }) => (
-                <MenuItem key={a.id.toString()} value={a.id}>
-                  {a.name}
-                </MenuItem>
-              ))
+              cliente.map(
+                (a: { id: string; name: string; id_profile: number }) => (
+                  <MenuItem key={a.id.toString()} value={a.id}>
+                    {a.name} (
+                    {a.id_profile === 1
+                      ? "Conservador"
+                      : a.id_profile === 2
+                      ? "Moderado"
+                      : a.id_profile === 3
+                      ? "Arrojado"
+                      : "Indefinido"}
+                    )
+                  </MenuItem>
+                )
+              )
             ) : (
               <MenuItem value="" disabled>
                 Carregando clientes...
@@ -144,9 +176,9 @@ export const Novacarteira = () => {
         </FormControl>
 
         <FormControl fullWidth margin="normal">
-          <InputLabel id=" ">Ações</InputLabel>
+          <InputLabel id="acoes-select-label">Ações</InputLabel>
           <Select
-            labelId=""
+            labelId="acoes-select-label"
             value={formData.id_listed_shares}
             onChange={handleAcoesChange}
             required
@@ -158,7 +190,9 @@ export const Novacarteira = () => {
                 </MenuItem>
               ))
             ) : (
-              <MenuItem value="" disabled></MenuItem>
+              <MenuItem value="" disabled>
+                Carregando ações...
+              </MenuItem>
             )}
           </Select>
         </FormControl>

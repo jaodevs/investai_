@@ -36,14 +36,44 @@ const getAll = async (
     if (!accessToken) {
       return new Error("Token de autenticação não encontrado.");
     }
-
-
     let urlRelativa = `/profiles`;
+    const { data, headers } = await Api.get(urlRelativa, {
+      headers: {
+        Authorization:  accessToken
+      }
+
+    });
+    if (data) {
+      return {
+        data,
+        totalCount: Number(
+          headers["x-total-count"] || Environment.LIMITE_DE_LINHAS
+        ),
+      };
+     
+    }
+
+    console.log(data);
+
+    return new Error("Erro ao listar os registros.");
+  } catch (error) {
+    console.error(error);
+    return new Error(
+      (error as { message: string }).message || "Erro ao listar os registros."
+    );
+  }
+};
 
 
+const getById = async ( id: string
+): Promise<TPessoasComTotalCount | Error> => {
+  try {
+    const accessToken = localStorage.getItem(LOCAL_STORAGE_KEY__ACCESS_TOKEN);
 
-  
-
+    if (!accessToken) {
+      return new Error("Token de autenticação não encontrado.");
+    }
+    let urlRelativa = `/profiles/${id}`;
     const { data, headers } = await Api.get(urlRelativa, {
       headers: {
         Authorization:  accessToken
@@ -72,5 +102,6 @@ const getAll = async (
 };
 export const PerfilService = {
     getAll,
+    getById
   };
   

@@ -8,6 +8,7 @@ export interface IListagemlistedshares {
     id: number;
     ticker: string;
     name: string;
+    id_profile: string;
     b3_sector_classification: string;
    
   }[];
@@ -16,7 +17,7 @@ export interface IListagemlistedshares {
   total: number;
 }
 
-interface IDetalhelistedshares {
+export interface IDetalhelistedshares {
   id: number;
   ticker: string;
   name: string;
@@ -70,19 +71,40 @@ const getAll = async (
   }
 };
 
-const getById = async (id: number): Promise<IDetalhelistedshares | Error> => {
+const getById = async ( id: string
+): Promise<TPessoasComTotalCount | Error> => {
   try {
-    const { data } = await Api.get(`/Doctor/${id}`);
+    const accessToken = localStorage.getItem(LOCAL_STORAGE_KEY__ACCESS_TOKEN);
 
-    if (data) {
-      return data;
+    if (!accessToken) {
+      return new Error("Token de autenticação não encontrado.");
     }
 
-    return new Error("Erro ao consultar o registro.");
+    let urlRelativa = `/listed-shares/${id}`;
+    
+    const { data, headers } = await Api.get(urlRelativa, {
+      headers: {
+        Authorization:  accessToken
+      }
+
+    });
+    if (data) {
+      return {
+        data,
+        totalCount: Number(
+          headers["x-total-count"] || Environment.LIMITE_DE_LINHAS
+        ),
+      };
+     
+    }
+
+    console.log(data);
+
+    return new Error("Erro ao listar os registros.");
   } catch (error) {
     console.error(error);
     return new Error(
-      (error as { message: string }).message || "Erro ao consultar o registro."
+      (error as { message: string }).message || "Erro ao listar os registros."
     );
   }
 };

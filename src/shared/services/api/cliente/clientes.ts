@@ -8,6 +8,7 @@ export interface IListagemCliente {
     id: number;
     type: string;
     name: string;
+    id_profile: string;
    
   }[];
   current: number;

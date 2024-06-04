@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom"; // Importe o hook useNavigate
+import log from "/public/logo.png";
 
 import { useAuthContext } from "../../contexts";
 
@@ -68,9 +69,15 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
       display="flex"
       alignItems="center"
       justifyContent="center"
+      flexDirection="column"
       style={{ backgroundImage: `url(${tenor})`, backgroundSize: "cover" }}
     >
-      <Card>
+      <img
+        src={log}
+        alt="Logo"
+        style={{ width: "18rem", height: "18rem", marginBottom: "-5rem" }}
+      />
+      <Card style={{ marginBottom: "5rem" }}>
         <CardContent>
           <Box display="flex" flexDirection="column" gap={2} width={250}>
             <Typography variant="h6" align="center">
@@ -121,7 +128,11 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
               Entrar
             </Button>
 
-            <Button variant="text" disabled={isLoading} onClick={() => navigate("/cadastro")} >
+            <Button
+              variant="text"
+              disabled={isLoading}
+              onClick={() => navigate("/cadastro")}
+            >
               Cadastre-se
             </Button>
           </Box>
