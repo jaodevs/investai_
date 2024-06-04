@@ -10,7 +10,7 @@ import {
   Typography,
 } from "@mui/material";
 import * as yup from "yup";
-import { useNavigate } from "react-router-dom"; // Importe o hook useNavigate
+import { useNavigate } from "react-router-dom";
 import log from "/public/logo.png";
 
 import { useAuthContext } from "../../contexts";
@@ -28,7 +28,7 @@ interface ILoginProps {
 
 export const Login: React.FC<ILoginProps> = ({ children }) => {
   const { isAuthenticated, signIn } = useAuthContext();
-  const navigate = useNavigate(); // Use o hook useNavigate
+  const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState(false);
   const [passwordError, setPasswordError] = useState("");
@@ -44,7 +44,7 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
       .then((dadosValidados) => {
         signIn(dadosValidados.username, dadosValidados.password).then(() => {
           setIsLoading(false);
-          navigate("/pagina-inicial"); // Redirecione após login bem-sucedido
+          navigate("/pagina-inicial");
         });
       })
       .catch((errors: yup.ValidationError) => {
@@ -71,15 +71,16 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
       justifyContent="center"
       flexDirection="column"
       style={{ backgroundImage: `url(${tenor})`, backgroundSize: "cover" }}
+      padding={2}
     >
       <img
         src={log}
         alt="Logo"
         style={{ width: "18rem", height: "18rem", marginBottom: "-5rem" }}
       />
-      <Card >
+      <Card style={{ width: "100%", maxWidth: 400 }}>
         <CardContent>
-          <Box display="flex" flexDirection="column" gap={2} width={250}>
+          <Box display="flex" flexDirection="column" gap={2} width="100%">
             <Typography variant="h6" align="center">
               Bem vindo
             </Typography>
@@ -87,7 +88,7 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
             <TextField
               fullWidth
               type="text"
-              label="username"
+              label="Username"
               value={username}
               disabled={isLoading}
               error={!!usernameError}
@@ -110,7 +111,7 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
           </Box>
         </CardContent>
         <CardActions>
-          <Box width="100%" display="flex" justifyContent="center">
+          <Box width="100%" display="flex" justifyContent="center" flexDirection="column" gap={1}>
             <Button
               variant="contained"
               disabled={isLoading}
@@ -124,6 +125,7 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
                   />
                 ) : undefined
               }
+              fullWidth
             >
               Entrar
             </Button>
@@ -132,6 +134,7 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
               variant="text"
               disabled={isLoading}
               onClick={() => navigate("/cadastro")}
+              fullWidth
             >
               Cadastre-se
             </Button>

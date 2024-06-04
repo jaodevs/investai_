@@ -15,6 +15,7 @@ import * as yup from "yup";
 import tenor from "../../../../public/vecteezy.gif";
 import { useNavigate } from "react-router-dom";
 import log from "/public/logo.png";
+
 const cadastro = yup.object().shape({
   cpf: yup.string().required("CPF é obrigatório"),
   email: yup.string().required("Email é obrigatório").email("Email inválido"),
@@ -98,6 +99,7 @@ export const Cadastro: React.FC<ICadastroProps> = ({}) => {
       display="flex"
       alignItems="center"
       justifyContent="center"
+      padding={2}
       style={{
         backgroundImage: `url(${tenor})`,
         backgroundSize: "cover",
@@ -110,42 +112,44 @@ export const Cadastro: React.FC<ICadastroProps> = ({}) => {
         alt="Logo"
         style={{ width: "18rem", height: "18rem", marginBottom: "-5rem" }}
       />
-      <Card>
+      <Card style={{ width: "100%", maxWidth: 400 }}>
         <CardContent>
-          <Typography variant="h5">Cadastro</Typography>
-          <TextField
-            label="CPF"
-            fullWidth
-            value={cpf}
-            onChange={(event) => setCpf(event.target.value)}
-            error={!!cpfError}
-            helperText={cpfError}
-          />
-          <TextField
-            label="Email"
-            fullWidth
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-            error={!!emailError}
-            helperText={emailError}
-          />
-          <TextField
-            label="Nome"
-            fullWidth
-            value={name}
-            onChange={(event) => setName(event.target.value)}
-            error={!!nameError}
-            helperText={nameError}
-          />
-          <TextField
-            label="Senha"
-            fullWidth
-            type="password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-            error={!!passwordError}
-            helperText={passwordError}
-          />
+          <Typography variant="h5" align="center">Cadastro</Typography>
+          <Box display="flex" flexDirection="column" gap={2}>
+            <TextField
+              label="CPF"
+              fullWidth
+              value={cpf}
+              onChange={(event) => setCpf(event.target.value)}
+              error={!!cpfError}
+              helperText={cpfError}
+            />
+            <TextField
+              label="Email"
+              fullWidth
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              error={!!emailError}
+              helperText={emailError}
+            />
+            <TextField
+              label="Nome"
+              fullWidth
+              value={name}
+              onChange={(event) => setName(event.target.value)}
+              error={!!nameError}
+              helperText={nameError}
+            />
+            <TextField
+              label="Senha"
+              fullWidth
+              type="password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+              error={!!passwordError}
+              helperText={passwordError}
+            />
+          </Box>
         </CardContent>
         <CardActions>
           <Button
@@ -153,6 +157,7 @@ export const Cadastro: React.FC<ICadastroProps> = ({}) => {
             variant="contained"
             color="primary"
             onClick={handleSubmit}
+            disabled={isLoading}
           >
             {isLoading ? <CircularProgress size={24} /> : "Cadastrar"}
           </Button>
