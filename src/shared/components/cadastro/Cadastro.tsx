@@ -110,7 +110,7 @@ export const Cadastro: React.FC<ICadastroProps> = ({}) => {
         alt="Logo"
         style={{ width: "18rem", height: "18rem", marginBottom: "-5rem" }}
       />
-      <Card style={{ marginBottom: "3rem" }}>
+      <Card>
         <CardContent>
           <Typography variant="h5">Cadastro</Typography>
           <TextField

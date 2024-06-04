@@ -77,7 +77,7 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
         alt="Logo"
         style={{ width: "18rem", height: "18rem", marginBottom: "-5rem" }}
       />
-      <Card style={{ marginBottom: "5rem" }}>
+      <Card >
         <CardContent>
           <Box display="flex" flexDirection="column" gap={2} width={250}>
             <Typography variant="h6" align="center">
